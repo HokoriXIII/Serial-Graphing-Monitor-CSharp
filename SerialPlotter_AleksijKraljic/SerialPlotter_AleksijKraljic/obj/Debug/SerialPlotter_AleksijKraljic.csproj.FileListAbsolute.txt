@@ -71,3 +71,6 @@ C:\Users\Aleksij\Desktop\Quad_Dev\Serial Graphing Program C#\SerialPlotter_Aleks
 C:\Users\Aleksij\Desktop\Quad_Dev\Serial Graphing Program C#\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Debug\SerialPlotter_AleksijKraljic.Form1.resources
 C:\Users\Aleksij\Desktop\Quad_Dev\Serial Graphing Program C#\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Debug\SerialPlotter_AleksijKraljic.Properties.Resources.resources
 C:\Users\Aleksij\Desktop\Quad_Dev\Serial Graphing Program C#\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Debug\SerialPlotter_AleksijKraljic.csproj.GenerateResource.Cache
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\bin\Debug\SerialPlotter_AleksijKraljic.exe.config
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Debug\SerialPlotter_AleksijKraljic.exe
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Debug\SerialPlotter_AleksijKraljic.pdb
