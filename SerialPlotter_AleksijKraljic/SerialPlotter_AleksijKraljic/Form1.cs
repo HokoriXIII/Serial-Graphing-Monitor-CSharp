@@ -26,7 +26,7 @@ namespace SerialPlotter_AleksijKraljic
 
         List<string> write_D = new List<string>();
 
-        Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Pink };
+        Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Orange };
 
         // new GraphPane for plotting
         GraphPane akMonitor = new GraphPane();
@@ -35,6 +35,8 @@ namespace SerialPlotter_AleksijKraljic
         // Min and Max values for Y-Axis
         double Y_max = 5;
         double Y_min = 0;
+
+        List<CheckBox> channelSelectBoxes = new List<CheckBox>();
 
         public Form1()
         {
@@ -56,13 +58,15 @@ namespace SerialPlotter_AleksijKraljic
 
             fileNameBox.Text = fileName;
 
+            channelSelectBoxes.Add(checkCh1);
+            channelSelectBoxes.Add(checkCh2);
+            channelSelectBoxes.Add(checkCh3);
+            channelSelectBoxes.Add(checkCh4);
+            channelSelectBoxes.Add(checkCh5);
+            channelSelectBoxes.Add(checkCh6);
+
             // initial form object states
-            checkCh1.Enabled = true;
-            checkCh2.Enabled = true;
-            checkCh3.Enabled = true;
-            checkCh4.Enabled = true;
-            checkCh5.Enabled = true;
-            checkCh6.Enabled = true;
+            channelSelectBoxes.ForEach(c => c.Enabled = true);
             checkAutoY.Checked = true;
             numericUDmaxY.Enabled = false;
             numericUDminY.Enabled = false;
@@ -82,7 +86,6 @@ namespace SerialPlotter_AleksijKraljic
             {
                 channels.Add(new Channel(i));
             }
-
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -129,12 +132,8 @@ namespace SerialPlotter_AleksijKraljic
                 btn_refreshCOM.Enabled = false;
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
                 serialPort1.Write("b");
-                checkCh1.Enabled = true;
-                checkCh2.Enabled = true;
-                checkCh3.Enabled = true;
-                checkCh4.Enabled = true;
+                channelSelectBoxes.ForEach(c => c.Enabled = true);
             }
-
         }
 
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -170,7 +169,6 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-            // button that starts the communication
             serialPort1.Write("a");
             btn_start.Enabled = false;
             btn_stop.Enabled = true;
@@ -189,12 +187,10 @@ namespace SerialPlotter_AleksijKraljic
                 channels[i].curve = akMonitor.AddCurve(null, channels[i].ringBuffer, channels[i].lineColor, SymbolType.None);
                 channels[i].setLineWidth(1);
             }
-
         }
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
-            // button that stops the communication
             serialPort1.Write("b");
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
@@ -212,7 +208,6 @@ namespace SerialPlotter_AleksijKraljic
 
         private void save_measurements()
         {
-            // method used to store recorded data to file
             string folder_path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
             
             //string fileName = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt");
@@ -245,7 +240,6 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
-            // button to disconnect from the device
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
@@ -255,20 +249,14 @@ namespace SerialPlotter_AleksijKraljic
                 btn_start.Enabled = false;
                 btn_stop.Enabled = false;
             }
-
-            checkCh1.Enabled = false;
-            checkCh2.Enabled = false;
-            checkCh3.Enabled = false;
-            checkCh4.Enabled = false;
+            channelSelectBoxes.ForEach(c => c.Enabled = false);
             comBox.Enabled = true;
             baudBox.Enabled = true;
             btn_refreshCOM.Enabled = true;
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // tasks to perform when the form is being closed
             if (serialPort1.IsOpen) serialPort1.Write("b");
             System.Threading.Thread.Sleep(100);
 
@@ -282,7 +270,6 @@ namespace SerialPlotter_AleksijKraljic
             {
                 e.Cancel = true;
             }
-            
         }
 
         
@@ -303,17 +290,17 @@ namespace SerialPlotter_AleksijKraljic
             measurement.timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
             try
             {
-                if (checkCh1.Checked) { channels[0].addToBuffer(); }
-                else { channels[0].ringBuffer.Clear(); }
-                if (checkCh2.Checked && measurement.numOfDataReceived >= 2) { channels[1].addToBuffer(); }
-                else { channels[1].ringBuffer.Clear(); }
+                for (int i = 0; i < 6; i++)
+                {
+                    if (channelSelectBoxes[i].Checked) { channels[i].addToBuffer(); }
+                    else { channels[i].ringBuffer.Clear(); }
+                }
             }
             catch { }
         }
 
         private void plot_data(object sender, EventArgs e)
         {
-            // method to plot the received data
             zedGraphControl1.AxisChange();
             zedGraphControl1.Refresh();
             akMonitor.XAxis.Scale.Min = measurement.timeStamp / 1000 - t_range;
@@ -328,7 +315,6 @@ namespace SerialPlotter_AleksijKraljic
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // timer that updates the graph
             this.BeginInvoke(new EventHandler(plot_data));
         }
         

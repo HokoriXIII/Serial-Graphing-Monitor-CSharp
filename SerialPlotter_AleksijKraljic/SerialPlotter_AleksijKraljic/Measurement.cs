@@ -11,23 +11,23 @@ namespace SerialPlotter_AleksijKraljic
     public class Measurement
     {
          // Fields
-        public string RxString; // USED BY ALL INSTANCES
-        public bool RxStringComplete = false; // USED BY ALL INSTANCES
-        public string[] splittedData; // USED BY ALL INSTANCES
-        public int numOfDataReceived; // USED BY ALL INSTANCES
-        public double timeStamp = 0; // USED BY ALL INSTANCES
+        public string RxString;
+        public bool RxStringComplete = false;
+        public string[] splittedData;
+        public int numOfDataReceived;
+        public double timeStamp = 0;
 
         // Methods
-        public void splitReceivedString() // USED BY ALL INSTANCES
+        public void splitReceivedString()
         {
             splittedData = RxString.Split('_');
             numOfDataReceived = splittedData.Length;
         }
-        public void clearRxString() // USED BY ALL INSTANCES
+        public void clearRxString()
         {
             RxString = "";
         }
-        public void cleanUpReceivedData() // USED BY ALL INSTANCES
+        public void cleanUpReceivedData()
         {
             if (RxString.Length > 2)
             {
