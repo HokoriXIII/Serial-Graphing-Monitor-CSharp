@@ -26,7 +26,7 @@ namespace SerialPlotter_AleksijKraljic
 
         List<string> write_D = new List<string>();
 
-       // Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Pink };
+        Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Pink };
 
         // new GraphPane for plotting
         GraphPane akMonitor = new GraphPane();
@@ -35,8 +35,6 @@ namespace SerialPlotter_AleksijKraljic
         // Min and Max values for Y-Axis
         double Y_max = 5;
         double Y_min = 0;
-
-        bool start_condition = false;
 
         public Form1()
         {
@@ -80,8 +78,10 @@ namespace SerialPlotter_AleksijKraljic
 
             fileNameBox.Enabled = false;
 
-            channels.Add(new Channel(0));
-            channels.Add(new Channel(1));
+            for (int i = 0; i < 6; i++)
+            {
+                channels.Add(new Channel(i));
+            }
 
         }
 
@@ -172,7 +172,6 @@ namespace SerialPlotter_AleksijKraljic
         {
             // button that starts the communication
             serialPort1.Write("a");
-            start_condition = true;
             btn_start.Enabled = false;
             btn_stop.Enabled = true;
             btn_disconnect.Enabled = false;
@@ -182,18 +181,14 @@ namespace SerialPlotter_AleksijKraljic
 
             akMonitor.CurveList.Clear();
 
-            channels[0].clearOnStart();
-            channels[1].clearOnStart();
+            channels.ForEach(c => c.clearOnStart());
 
-            //channels[0].addToBuffer();
-
-            channels[0].lineColor = Color.Blue;
-            channels[0].curve = akMonitor.AddCurve(null, channels[0].ringBuffer, channels[0].lineColor, SymbolType.None);
-            channels[0].setLineWidth(1);
-
-            channels[1].lineColor = Color.Red;
-            channels[1].curve = akMonitor.AddCurve(null, channels[1].ringBuffer, channels[1].lineColor, SymbolType.None);
-            channels[1].setLineWidth(1);
+            for (int i = 0; i < 6; i++)
+            {
+                channels[i].lineColor = lineColors[i];
+                channels[i].curve = akMonitor.AddCurve(null, channels[i].ringBuffer, channels[i].lineColor, SymbolType.None);
+                channels[i].setLineWidth(1);
+            }
 
         }
 
@@ -201,7 +196,6 @@ namespace SerialPlotter_AleksijKraljic
         {
             // button that stops the communication
             serialPort1.Write("b");
-            start_condition = false;
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
             btn_disconnect.Enabled = true;
