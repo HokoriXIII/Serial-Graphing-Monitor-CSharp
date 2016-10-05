@@ -36,17 +36,9 @@
             this.btn_start = new System.Windows.Forms.Button();
             this.btn_stop = new System.Windows.Forms.Button();
             this.comBox = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.baudBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.checkCh1 = new System.Windows.Forms.CheckBox();
@@ -55,8 +47,6 @@
             this.checkCh4 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.displayCheckBox = new System.Windows.Forms.CheckBox();
             this.numericUDtime = new System.Windows.Forms.NumericUpDown();
             this.numericUDmaxY = new System.Windows.Forms.NumericUpDown();
             this.numericUDminY = new System.Windows.Forms.NumericUpDown();
@@ -70,10 +60,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.fileNameBox = new System.Windows.Forms.TextBox();
             this.saveCheckBox = new System.Windows.Forms.CheckBox();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.checkCh6 = new System.Windows.Forms.CheckBox();
+            this.checkCh5 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDmaxY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDminY)).BeginInit();
@@ -146,14 +136,6 @@
             this.comBox.TabIndex = 5;
             this.comBox.SelectedIndexChanged += new System.EventHandler(this.comBox_SelectedIndexChanged);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 51);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(105, 20);
-            this.textBox1.TabIndex = 6;
-            // 
             // baudBox
             // 
             this.baudBox.FormattingEnabled = true;
@@ -182,70 +164,6 @@
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 9;
             this.label2.Text = "Baud Rate";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 35);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Channel 1";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 73);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Channel 2";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(6, 89);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(105, 20);
-            this.textBox2.TabIndex = 11;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 111);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Channel 3";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(6, 127);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(105, 20);
-            this.textBox3.TabIndex = 13;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 149);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 13);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Channel 4";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(6, 165);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(105, 20);
-            this.textBox4.TabIndex = 15;
             // 
             // zedGraphControl1
             // 
@@ -322,44 +240,18 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkCh6);
+            this.groupBox2.Controls.Add(this.checkCh5);
             this.groupBox2.Controls.Add(this.checkCh1);
             this.groupBox2.Controls.Add(this.checkCh2);
             this.groupBox2.Controls.Add(this.checkCh4);
             this.groupBox2.Controls.Add(this.checkCh3);
             this.groupBox2.Location = new System.Drawing.Point(142, 77);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(122, 119);
+            this.groupBox2.Size = new System.Drawing.Size(122, 171);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Channel Select";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.displayCheckBox);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textBox1);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.textBox4);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.textBox3);
-            this.groupBox3.Location = new System.Drawing.Point(269, 27);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(122, 192);
-            this.groupBox3.TabIndex = 24;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Data";
-            // 
-            // displayCheckBox
-            // 
-            this.displayCheckBox.AutoSize = true;
-            this.displayCheckBox.Location = new System.Drawing.Point(6, 18);
-            this.displayCheckBox.Name = "displayCheckBox";
-            this.displayCheckBox.Size = new System.Drawing.Size(95, 17);
-            this.displayCheckBox.TabIndex = 38;
-            this.displayCheckBox.Text = "Display Values";
-            this.displayCheckBox.UseVisualStyleBackColor = true;
             // 
             // numericUDtime
             // 
@@ -477,7 +369,7 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.numericUDmaxY);
             this.groupBox4.Controls.Add(this.numericUDminY);
-            this.groupBox4.Location = new System.Drawing.Point(398, 26);
+            this.groupBox4.Location = new System.Drawing.Point(270, 27);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(122, 162);
             this.groupBox4.TabIndex = 34;
@@ -515,7 +407,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(393, 212);
+            this.label7.Location = new System.Drawing.Point(265, 213);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 36;
@@ -523,7 +415,7 @@
             // 
             // fileNameBox
             // 
-            this.fileNameBox.Location = new System.Drawing.Point(395, 228);
+            this.fileNameBox.Location = new System.Drawing.Point(267, 229);
             this.fileNameBox.Name = "fileNameBox";
             this.fileNameBox.Size = new System.Drawing.Size(123, 20);
             this.fileNameBox.TabIndex = 37;
@@ -531,7 +423,7 @@
             // saveCheckBox
             // 
             this.saveCheckBox.AutoSize = true;
-            this.saveCheckBox.Location = new System.Drawing.Point(396, 192);
+            this.saveCheckBox.Location = new System.Drawing.Point(268, 193);
             this.saveCheckBox.Name = "saveCheckBox";
             this.saveCheckBox.Size = new System.Drawing.Size(123, 17);
             this.saveCheckBox.TabIndex = 40;
@@ -539,10 +431,25 @@
             this.saveCheckBox.UseVisualStyleBackColor = true;
             this.saveCheckBox.CheckedChanged += new System.EventHandler(this.saveCheckBox_CheckedChanged);
             // 
-            // timer2
+            // checkCh6
             // 
-            this.timer2.Interval = 50;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.checkCh6.AutoSize = true;
+            this.checkCh6.Location = new System.Drawing.Point(6, 141);
+            this.checkCh6.Name = "checkCh6";
+            this.checkCh6.Size = new System.Drawing.Size(74, 17);
+            this.checkCh6.TabIndex = 23;
+            this.checkCh6.Text = "Channel 6";
+            this.checkCh6.UseVisualStyleBackColor = true;
+            // 
+            // checkCh5
+            // 
+            this.checkCh5.AutoSize = true;
+            this.checkCh5.Location = new System.Drawing.Point(6, 117);
+            this.checkCh5.Name = "checkCh5";
+            this.checkCh5.Size = new System.Drawing.Size(74, 17);
+            this.checkCh5.TabIndex = 22;
+            this.checkCh5.Text = "Channel 5";
+            this.checkCh5.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -553,7 +460,6 @@
             this.Controls.Add(this.fileNameBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.zedGraphControl1);
@@ -571,8 +477,6 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDmaxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDminY)).EndInit();
@@ -594,17 +498,9 @@
         private System.Windows.Forms.Button btn_start;
         private System.Windows.Forms.Button btn_stop;
         private System.Windows.Forms.ComboBox comBox;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox baudBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
         private ZedGraph.ZedGraphControl zedGraphControl1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox checkCh1;
@@ -613,7 +509,6 @@
         private System.Windows.Forms.CheckBox checkCh4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.NumericUpDown numericUDtime;
         private System.Windows.Forms.NumericUpDown numericUDmaxY;
         private System.Windows.Forms.NumericUpDown numericUDminY;
@@ -626,9 +521,9 @@
         private System.Windows.Forms.ToolStripMenuItem configDirectionsToolStripMenuItem;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox fileNameBox;
-        private System.Windows.Forms.CheckBox displayCheckBox;
         private System.Windows.Forms.CheckBox saveCheckBox;
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.CheckBox checkCh6;
+        private System.Windows.Forms.CheckBox checkCh5;
     }
 }
 

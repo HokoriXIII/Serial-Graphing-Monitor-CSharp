@@ -8,47 +8,36 @@ using System.Drawing;
 
 namespace SerialPlotter_AleksijKraljic
 {
-    class Measurement
+    public class Measurement
     {
          // Fields
-        public string RxString;
-        public double timeStamp = 0;
-        public List<double> recordedValues = new List<double>();
-        public List<double> recordedTime = new List<double>();
-        public RollingPointPairList ringBuffer = new RollingPointPairList(500);
-        public LineItem curve;
-
-        public string[] splittedData;
-        public int numOfDataReceived;
-        public int lineID = 0;
-        public Color lineColor;
+        public string RxString; // USED BY ALL INSTANCES
+        public bool RxStringComplete = false; // USED BY ALL INSTANCES
+        public string[] splittedData; // USED BY ALL INSTANCES
+        public int numOfDataReceived; // USED BY ALL INSTANCES
+        public double timeStamp = 0; // USED BY ALL INSTANCES
 
         // Methods
-        public void splitReceivedString()
+        public void splitReceivedString() // USED BY ALL INSTANCES
         {
             splittedData = RxString.Split('_');
             numOfDataReceived = splittedData.Length;
         }
-        public void recordData()
+        public void clearRxString() // USED BY ALL INSTANCES
         {
-            recordedTime.Add(timeStamp);
-            recordedValues.Add(Convert.ToDouble(splittedData[lineID]));
+            RxString = "";
         }
-        public void clearOnStart()
+        public void cleanUpReceivedData() // USED BY ALL INSTANCES
         {
-            recordedValues.Clear();
-            recordedTime.Clear();
-            ringBuffer.Clear();
+            if (RxString.Length > 2)
+            {
+                if (RxString.IndexOf("\n") != -1)
+                {
+                    RxStringComplete = true;
+                    RxString = RxString.Replace("\r\n", "");
+                }
+            }
         }
-        public void setLineWidth(Single lineWidth)
-        {
-            curve.Line.Width = lineWidth;
-        }
-        public void addToBuffer()
-        {
-            ringBuffer.Add(timeStamp / 1000, Convert.ToDouble(splittedData[lineID]));
-        }
-        
         
     }
 }

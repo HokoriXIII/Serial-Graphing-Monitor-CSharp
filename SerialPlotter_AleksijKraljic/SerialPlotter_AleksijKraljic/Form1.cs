@@ -16,53 +16,27 @@ namespace SerialPlotter_AleksijKraljic
 {
     public partial class Form1 : Form
     {
-        Measurement my_measurement = new Measurement();
+        Measurement measurement = new Measurement();
+        List<Channel> channels = new List<Channel>();
 
-        int DBG_start = 0;
-
-        // serial receive varaible
-        //string RxString;
-        
-        bool RxStringComplete = false;
-        // timestamp variable
-        double time_ms = 0;
-        // range of X-Axis
-        double t_range = 4;
-        // Min and Max values for Y-Axis
-        double Y_max = 5;
-        double Y_min = 0;
-        // String for storing received data
-        string[] measurements;
         string fileName = "measured_data.txt";
 
         // stopwatch for recording timestamp
         Stopwatch s_watch = new Stopwatch();
 
-        // List for data storage to write to a file
-        List<double> M1 = new List<double>();
-        List<double> M2 = new List<double>();
-        List<double> M3 = new List<double>();
-        List<double> M4 = new List<double>();
-        List<double> time_M = new List<double>();
         List<string> write_D = new List<string>();
+
+       // Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Pink };
 
         // new GraphPane for plotting
         GraphPane akMonitor = new GraphPane();
+        // range of X-Axis
+        double t_range = 4;
+        // Min and Max values for Y-Axis
+        double Y_max = 5;
+        double Y_min = 0;
 
-        // Circulat buffers and curve objects for all 4 values received
-        RollingPointPairList sensor1 = new RollingPointPairList(500);
-        //LineItem ak_curve1;
-        RollingPointPairList sensor2 = new RollingPointPairList(500);
-        //LineItem ak_curve2;
-        RollingPointPairList sensor3 = new RollingPointPairList(500);
-        //LineItem ak_curve3;
-        RollingPointPairList sensor4 = new RollingPointPairList(500);
-        //LineItem ak_curve4;
-
-        List<LineItem> ak_curves = new List<LineItem>();
-        
-        // Construct a serial port object
-        //SerialPort serialPort1 = new SerialPort(); ALREADY CONSTRUCTED IN THE FORM
+        bool start_condition = false;
 
         public Form1()
         {
@@ -89,6 +63,8 @@ namespace SerialPlotter_AleksijKraljic
             checkCh2.Enabled = true;
             checkCh3.Enabled = true;
             checkCh4.Enabled = true;
+            checkCh5.Enabled = true;
+            checkCh6.Enabled = true;
             checkAutoY.Checked = true;
             numericUDmaxY.Enabled = false;
             numericUDminY.Enabled = false;
@@ -103,6 +79,10 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.YAxis.MajorGrid.IsVisible = true;
 
             fileNameBox.Enabled = false;
+
+            channels.Add(new Channel(0));
+            channels.Add(new Channel(1));
+
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -159,146 +139,74 @@ namespace SerialPlotter_AleksijKraljic
 
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if (serialPort1.IsOpen)
-            {
-                my_measurement.RxString += serialPort1.ReadExisting();
-                RxStringComplete = false;
-                if (my_measurement.RxString.Length > 2)
+                if (serialPort1.IsOpen)
                 {
-                    if (my_measurement.RxString.IndexOf("\n") != -1)
-                    {
-                        RxStringComplete = true;
-                        my_measurement.RxString = my_measurement.RxString.Replace("\r\n", "");
-                    }
+                    measurement.RxString += serialPort1.ReadExisting();
+                    measurement.RxStringComplete = false;
+                    measurement.cleanUpReceivedData();
                 }
-            }
 
-            if (RxStringComplete == true)
-            {
-                //splitReceivedString();
-                my_measurement.splitReceivedString();
-
-                if (DBG_start==1)
+                if (measurement.RxStringComplete == true)
                 {
+                    measurement.splitReceivedString();
+
+                    channels.ForEach(c => c.timeStamp = measurement.timeStamp);
+                    channels.ForEach(c => c.splittedData = measurement.splittedData);
+
                     this.BeginInvoke(new EventHandler(toBuffer));
-                }
-                
-                if (saveCheckBox.Checked)
-                {
-                    try
+
+                    if (saveCheckBox.Checked)
                     {
-
-                        my_measurement.recordData();
-                        /*
-                        time_M.Add(time_ms);
-                        
-                        if (my_measurement.numOfDataReceived == 1)
+                        try
                         {
-                            M1.Add(Convert.ToDouble(measurements[0]));
-                            M2.Add(0);
-                            M3.Add(0);
-                            M4.Add(0);
+                            channels.ForEach(c => c.recordData());
                         }
-                        else if (my_measurement.numOfDataReceived == 2)
-                        {
-                            M1.Add(Convert.ToDouble(measurements[0]));
-                            M2.Add(Convert.ToDouble(measurements[1]));
-                            M3.Add(0);
-                            M4.Add(0);
-                        }
-                        else if (my_measurement.numOfDataReceived == 3)
-                        {
-                            M1.Add(Convert.ToDouble(measurements[0]));
-                            M2.Add(Convert.ToDouble(measurements[1]));
-                            M3.Add(Convert.ToDouble(measurements[2]));
-                            M4.Add(0);
-                        }
-                        else if (my_measurement.numOfDataReceived == 4)
-                        {
-                            M1.Add(Convert.ToDouble(measurements[0]));
-                            M2.Add(Convert.ToDouble(measurements[1]));
-                            M3.Add(Convert.ToDouble(measurements[2]));
-                            M4.Add(Convert.ToDouble(measurements[3]));
-                        }
-                        */
+                        catch { }
                     }
-                    catch { }
-                }
 
-                my_measurement.RxString = "";
-                
-            }
+                    measurement.clearRxString();  
+                }
         }
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-
-            DBG_start = 1;
-
             // button that starts the communication
             serialPort1.Write("a");
+            start_condition = true;
             btn_start.Enabled = false;
             btn_stop.Enabled = true;
             btn_disconnect.Enabled = false;
-            //M1.Clear();
-            //M2.Clear();
-            //M3.Clear();
-            //M4.Clear();
-            //time_M.Clear();
 
             timer1.Start();
-            timer2.Start();
             s_watch.Start();
 
             akMonitor.CurveList.Clear();
-            //sensor1.Clear();
-            //sensor2.Clear();
-            //sensor3.Clear();
-            //sensor4.Clear();
 
-            my_measurement.clearOnStart();
+            channels[0].clearOnStart();
+            channels[1].clearOnStart();
 
-            my_measurement.addToBuffer();
+            //channels[0].addToBuffer();
 
-            my_measurement.lineColor = Color.Red;
-            my_measurement.curve = akMonitor.AddCurve(null, my_measurement.ringBuffer, my_measurement.lineColor, SymbolType.None);
-            my_measurement.setLineWidth(2);
+            channels[0].lineColor = Color.Blue;
+            channels[0].curve = akMonitor.AddCurve(null, channels[0].ringBuffer, channels[0].lineColor, SymbolType.None);
+            channels[0].setLineWidth(1);
 
-            //ak_curves.Add(akMonitor.AddCurve(null,sensor1, Color.Blue, SymbolType.None));
-            //ak_curves.Line.Width = 2;
-            //ak_curve3 = akMonitor.AddCurve(null, sensor3, Color.Green, SymbolType.None);
-            //ak_curve3.Line.Width = 2;
-            //ak_curve4 = akMonitor.AddCurve(null, sensor4, Color.Orange, SymbolType.None);
-            //ak_curve4.Line.Width = 2;
-        }
+            channels[1].lineColor = Color.Red;
+            channels[1].curve = akMonitor.AddCurve(null, channels[1].ringBuffer, channels[1].lineColor, SymbolType.None);
+            channels[1].setLineWidth(1);
 
-        private void displayText(object sender, EventArgs e)
-        {
-            // method that displays text in textboxes
-            //string[] measurements = RxString.Split('_');
-            try
-            {
-                /*
-                textBox1.Text = measurements[0];
-                textBox2.Text = measurements[1];
-                textBox3.Text = measurements[2];
-                textBox4.Text = measurements[3];
-                */
-            }
-            catch { }
         }
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
             // button that stops the communication
             serialPort1.Write("b");
-            textBox1.Text = "";
+            start_condition = false;
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
             btn_disconnect.Enabled = true;
 
             timer1.Stop();
-            timer2.Stop();
             s_watch.Stop();
             s_watch.Reset();
 
@@ -322,11 +230,11 @@ namespace SerialPlotter_AleksijKraljic
                 sw.WriteLine("=====measurements=====");
                 sw.WriteLine("|t|ch1|ch2|ch3|ch4|");
 
-                for (int i=0;i<M1.Count;i++)
+                for (int i=0;i<(channels[0].recordedTime.Count);i++)
                 {
                     try
                     {
-                        //write_D.Add(Convert.ToString(time_M[i]) + "," + Convert.ToString(M1[i]) + "," + Convert.ToString(M2[i]) + "," + Convert.ToString(M3[i]) + "," + Convert.ToString(M4[i]));
+                        write_D.Add(Convert.ToString(channels[0].recordedTime[i]) + "," + Convert.ToString(channels[0].recordedValues[i]));
                     }
                     catch
                     {
@@ -352,10 +260,6 @@ namespace SerialPlotter_AleksijKraljic
                 btn_disconnect.Enabled = false;
                 btn_start.Enabled = false;
                 btn_stop.Enabled = false;
-                textBox1.Text = "";
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
             }
 
             checkCh1.Enabled = false;
@@ -402,26 +306,13 @@ namespace SerialPlotter_AleksijKraljic
 
         private void toBuffer(object sender, EventArgs e)
         {
-            // method to store received values to a circular buffer that is being drawn on the graph
-            //string[] measurements = RxString.Split('_');
-
-            //time_ms = Convert.ToDouble(s_watch.ElapsedMilliseconds);
-            my_measurement.timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
-
+            measurement.timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
             try
             {
-                my_measurement.addToBuffer();
-                //sensor1.Add(my_measurement.timeStamp / 1000, 500);
-                /*
-                if (checkCh1.Checked) { sensor1.Add(time_ms / 1000, Convert.ToDouble(measurements[0])); }
-                else { sensor1.Clear(); }
-                if (checkCh2.Checked && measurements.Length >= 2) { sensor2.Add(time_ms / 1000, Convert.ToDouble(measurements[1])); }
-                else { sensor2.Clear(); }
-                if (checkCh3.Checked && measurements.Length >= 3) { sensor3.Add(time_ms / 1000, Convert.ToDouble(measurements[2])); }
-                else { sensor3.Clear(); }
-                if (checkCh4.Checked && measurements.Length >= 4) { sensor4.Add(time_ms / 1000, Convert.ToDouble(measurements[3])); }
-                else { sensor4.Clear(); }
-                */
+                if (checkCh1.Checked) { channels[0].addToBuffer(); }
+                else { channels[0].ringBuffer.Clear(); }
+                if (checkCh2.Checked && measurement.numOfDataReceived >= 2) { channels[1].addToBuffer(); }
+                else { channels[1].ringBuffer.Clear(); }
             }
             catch { }
         }
@@ -431,8 +322,8 @@ namespace SerialPlotter_AleksijKraljic
             // method to plot the received data
             zedGraphControl1.AxisChange();
             zedGraphControl1.Refresh();
-            akMonitor.XAxis.Scale.Min = my_measurement.timeStamp / 1000 - t_range;
-            akMonitor.XAxis.Scale.Max = my_measurement.timeStamp / 1000;
+            akMonitor.XAxis.Scale.Min = measurement.timeStamp / 1000 - t_range;
+            akMonitor.XAxis.Scale.Max = measurement.timeStamp / 1000;
 
             if (!checkAutoY.Checked)
             {
@@ -486,13 +377,6 @@ namespace SerialPlotter_AleksijKraljic
             aboutWindow.Show();
         }
 
-        /*
-        private void splitReceivedString()
-        {
-            measurements = my_measurement.RxString.Split('_');
-        }
-        */
-
         private void saveCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (saveCheckBox.Checked == true)
@@ -502,14 +386,6 @@ namespace SerialPlotter_AleksijKraljic
             else if (saveCheckBox.Checked == false)
             {
                 fileNameBox.Enabled = false;
-            }
-        }
-
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            if (displayCheckBox.Checked)
-            {
-                this.Invoke(new EventHandler(displayText));
             }
         }
     }
