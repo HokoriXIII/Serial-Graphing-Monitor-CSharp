@@ -136,8 +136,8 @@
             this.textBoxDescription.Size = new System.Drawing.Size(271, 126);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "DIRECTIONS: \r\n1. Send up to 4 values separated by \"_\" (underscore). \r\n2. Send dat" +
-    "a every 50ms or longer. \r\n3. Measurments are stored in the \"measured_data.txt\".";
+            this.textBoxDescription.Text = "DIRECTIONS: \r\nSend up to 4 values separated by \"_\" (underscore): Example:\" x_y_z_" +
+    "w\\n\"";
             // 
             // okButton
             // 
