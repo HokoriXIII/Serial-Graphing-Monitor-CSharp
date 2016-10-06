@@ -81,11 +81,6 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.YAxis.MajorGrid.IsVisible = true;
 
             fileNameBox.Enabled = false;
-
-            for (int i = 0; i < 6; i++)
-            {
-                channels.Add(new Channel(i));
-            }
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -112,6 +107,12 @@ namespace SerialPlotter_AleksijKraljic
             serialPort1.PortName = comBox.Text;
             serialPort1.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
 
+            // Construct objects for measurement
+            for (int i = 0; i < 6; i++)
+            {
+                channels.Add(new Channel(i));
+            }
+            
             try
             {
                 serialPort1.Open();
@@ -140,9 +141,10 @@ namespace SerialPlotter_AleksijKraljic
         {
                 if (serialPort1.IsOpen)
                 {
-                    measurement.RxString += serialPort1.ReadExisting();
-                    measurement.RxStringComplete = false;
-                    measurement.cleanUpReceivedData();
+                    try { measurement.RxString += serialPort1.ReadLine(); }
+                    catch { }
+                    measurement.RxStringComplete = true;
+                    //measurement.cleanUpReceivedData();
                 }
 
                 if (measurement.RxStringComplete == true)
@@ -156,15 +158,15 @@ namespace SerialPlotter_AleksijKraljic
 
                     if (saveCheckBox.Checked)
                     {
-                        try
+                        for (int i = 0; i < measurement.numOfDataReceived; i++)
                         {
-                            channels.ForEach(c => c.recordData());
+                            channels[i].recordData();
                         }
-                        catch { }
                     }
 
                     measurement.clearRxString();  
                 }
+
         }
 
         private void btn_start_Click(object sender, EventArgs e)
@@ -181,11 +183,19 @@ namespace SerialPlotter_AleksijKraljic
 
             channels.ForEach(c => c.clearOnStart());
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < measurement.numOfDataReceived; i++)
             {
                 channels[i].lineColor = lineColors[i];
                 channels[i].curve = akMonitor.AddCurve(null, channels[i].ringBuffer, channels[i].lineColor, SymbolType.None);
                 channels[i].setLineWidth(1);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (i < measurement.numOfDataReceived)
+                    channelSelectBoxes[i].Enabled = true;
+                else
+                    channelSelectBoxes[i].Enabled = false;
             }
         }
 
@@ -217,13 +227,13 @@ namespace SerialPlotter_AleksijKraljic
             using (StreamWriter sw = File.CreateText(path))
             {
                 sw.WriteLine("=====measurements=====");
-                sw.WriteLine("|t|ch1|ch2|ch3|ch4|");
+                sw.WriteLine("|t|ch1|ch2|ch3|ch4|ch5|ch6|");
 
                 for (int i=0;i<(channels[0].recordedTime.Count);i++)
                 {
                     try
                     {
-                        write_D.Add(Convert.ToString(channels[0].recordedTime[i]) + "," + Convert.ToString(channels[0].recordedValues[i]));
+                            write_D.Add(Convert.ToString(channels[0].recordedTime[i]) + "," + channels[0].recordedValues[i]);
                     }
                     catch
                     {
@@ -243,6 +253,7 @@ namespace SerialPlotter_AleksijKraljic
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
+                System.Threading.Thread.Sleep(50);
 
                 btn_connect.Enabled = true;
                 btn_disconnect.Enabled = false;
@@ -290,7 +301,7 @@ namespace SerialPlotter_AleksijKraljic
             measurement.timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
             try
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < measurement.numOfDataReceived; i++)
                 {
                     if (channelSelectBoxes[i].Checked) { channels[i].addToBuffer(); }
                     else { channels[i].ringBuffer.Clear(); }
@@ -367,6 +378,11 @@ namespace SerialPlotter_AleksijKraljic
             {
                 fileNameBox.Enabled = false;
             }
+        }
+
+        private void numericUDlineWidth_ValueChanged(object sender, EventArgs e)
+        {
+            channels.ForEach(c => c.setLineWidth(Convert.ToSingle(numericUDlineWidth.Value)));
         }
     }
 }

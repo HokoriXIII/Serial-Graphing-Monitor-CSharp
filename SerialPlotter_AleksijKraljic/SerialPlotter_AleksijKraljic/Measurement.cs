@@ -27,6 +27,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             RxString = "";
         }
+        /*
         public void cleanUpReceivedData()
         {
             if (RxString.Length > 2)
@@ -38,6 +39,6 @@ namespace SerialPlotter_AleksijKraljic
                 }
             }
         }
-        
+        */
     }
 }

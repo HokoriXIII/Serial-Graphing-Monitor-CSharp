@@ -10,14 +10,14 @@ namespace SerialPlotter_AleksijKraljic
 {
     class Channel
     {
-        public List<double> recordedValues = new List<double>();
-        public RollingPointPairList ringBuffer = new RollingPointPairList(500);
+        public List<string> recordedValues = new List<string>();        
         public LineItem curve;
         public int lineID = 0;
         public Color lineColor;
-        public double timeStamp = 0; // USED BY ALL INSTANCES
-        public List<double> recordedTime = new List<double>(); // USED BY ALL INSTANCES
-        public string[] splittedData; // USED BY ALL INSTANCES
+        public RollingPointPairList ringBuffer = new RollingPointPairList(500);
+        public double timeStamp = 0;
+        public List<double> recordedTime = new List<double>();
+        public string[] splittedData;
 
         public Channel(int ID)
         {
@@ -26,7 +26,14 @@ namespace SerialPlotter_AleksijKraljic
         public void recordData()
         {
             recordedTime.Add(timeStamp);
-            recordedValues.Add(Convert.ToDouble(splittedData[lineID]));
+            try
+            {
+                recordedValues.Add(splittedData[lineID]);
+            }
+            catch 
+            {
+                recordedValues.Add("X");
+            }
         }
         public void clearOnStart()
         {
@@ -40,7 +47,14 @@ namespace SerialPlotter_AleksijKraljic
         }
         public void addToBuffer()
         {
-            ringBuffer.Add(timeStamp / 1000, Convert.ToDouble(splittedData[lineID]));
+            try
+            {
+                ringBuffer.Add(timeStamp / 1000, Convert.ToDouble(splittedData[lineID]));
+            }
+            catch
+            {
+                ringBuffer.Add(timeStamp / 1000, 0);
+            }
         }
     }
 }
