@@ -178,6 +178,7 @@ namespace SerialPlotter_AleksijKraljic
 
             channels.ForEach(c => c.clearOnStart());
             measurement.clearOnStart();
+            write_D.Clear();
 
             for (int i = 0; i < measurement.numOfDataReceived; i++)
             {
@@ -201,6 +202,7 @@ namespace SerialPlotter_AleksijKraljic
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
             btn_disconnect.Enabled = true;
+            channelSelectBoxes.ForEach(c => c.Checked = false);
 
             timer1.Stop();
             s_watch.Stop();
