@@ -9,36 +9,20 @@ using System.Drawing;
 namespace SerialPlotter_AleksijKraljic
 {
     class Channel
-    {
-        public List<string> recordedValues = new List<string>();        
+    {       
         public LineItem curve;
         public int lineID = 0;
         public Color lineColor;
         public RollingPointPairList ringBuffer = new RollingPointPairList(500);
         public double timeStamp = 0;
-        public List<double> recordedTime = new List<double>();
-        public string[] splittedData;
+        public string measured_data;
 
         public Channel(int ID)
         {
             lineID = ID;
         }
-        public void recordData()
-        {
-            recordedTime.Add(timeStamp);
-            try
-            {
-                recordedValues.Add(splittedData[lineID]);
-            }
-            catch 
-            {
-                recordedValues.Add("X");
-            }
-        }
         public void clearOnStart()
         {
-            recordedValues.Clear();
-            recordedTime.Clear();
             ringBuffer.Clear();
         }
         public void setLineWidth(Single lineWidth)
@@ -49,7 +33,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             try
             {
-                ringBuffer.Add(timeStamp / 1000, Convert.ToDouble(splittedData[lineID]));
+                ringBuffer.Add(timeStamp / 1000, Convert.ToDouble(measured_data));
             }
             catch
             {

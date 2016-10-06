@@ -80,7 +80,7 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.XAxis.MajorGrid.IsVisible = true;
             akMonitor.YAxis.MajorGrid.IsVisible = true;
 
-            fileNameBox.Enabled = false;
+            fileNameBox.Enabled = true;
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -143,29 +143,24 @@ namespace SerialPlotter_AleksijKraljic
                 {
                     try { measurement.RxString += serialPort1.ReadLine(); }
                     catch { }
-                    measurement.RxStringComplete = true;
-                    //measurement.cleanUpReceivedData();
                 }
 
-                if (measurement.RxStringComplete == true)
+                measurement.splitReceivedString();
+
+                channels.ForEach(c => c.timeStamp = measurement.timeStamp);
+                for (int i = 0; i < measurement.numOfDataReceived; i++)
                 {
-                    measurement.splitReceivedString();
-
-                    channels.ForEach(c => c.timeStamp = measurement.timeStamp);
-                    channels.ForEach(c => c.splittedData = measurement.splittedData);
-
-                    this.BeginInvoke(new EventHandler(toBuffer));
-
-                    if (saveCheckBox.Checked)
-                    {
-                        for (int i = 0; i < measurement.numOfDataReceived; i++)
-                        {
-                            channels[i].recordData();
-                        }
-                    }
-
-                    measurement.clearRxString();  
+                    channels[i].measured_data = measurement.splittedData[i];
                 }
+
+                BeginInvoke(new EventHandler(toBuffer));
+
+                if (saveCheckBox.Checked)
+                {
+                    measurement.recordData();
+                }
+
+                measurement.clearRxString();  
 
         }
 
@@ -182,6 +177,7 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.CurveList.Clear();
 
             channels.ForEach(c => c.clearOnStart());
+            measurement.clearOnStart();
 
             for (int i = 0; i < measurement.numOfDataReceived; i++)
             {
@@ -229,11 +225,11 @@ namespace SerialPlotter_AleksijKraljic
                 sw.WriteLine("=====measurements=====");
                 sw.WriteLine("|t|ch1|ch2|ch3|ch4|ch5|ch6|");
 
-                for (int i=0;i<(channels[0].recordedTime.Count);i++)
+                for (int i=0;i<(measurement.recordedString.Count);i++)
                 {
                     try
                     {
-                            write_D.Add(Convert.ToString(channels[0].recordedTime[i]) + "," + channels[0].recordedValues[i]);
+                        write_D.Add(measurement.recordedString[i]);
                     }
                     catch
                     {
@@ -370,19 +366,15 @@ namespace SerialPlotter_AleksijKraljic
 
         private void saveCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (saveCheckBox.Checked == true)
-            {
-                fileNameBox.Enabled = true;
-            }
-            else if (saveCheckBox.Checked == false)
-            {
-                fileNameBox.Enabled = false;
-            }
+
         }
 
         private void numericUDlineWidth_ValueChanged(object sender, EventArgs e)
         {
-            channels.ForEach(c => c.setLineWidth(Convert.ToSingle(numericUDlineWidth.Value)));
+            for (int i = 0; i < measurement.numOfDataReceived; i++)
+            {
+                channels[i].setLineWidth(Convert.ToSingle(numericUDlineWidth.Value));
+            }
         }
     }
 }

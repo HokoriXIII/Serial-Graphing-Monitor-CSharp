@@ -12,10 +12,11 @@ namespace SerialPlotter_AleksijKraljic
     {
          // Fields
         public string RxString;
-        public bool RxStringComplete = false;
         public string[] splittedData;
         public int numOfDataReceived;
         public double timeStamp = 0;
+        public List<string> recordedString = new List<string>();
+        private string temp_rec;
 
         // Methods
         public void splitReceivedString()
@@ -27,18 +28,19 @@ namespace SerialPlotter_AleksijKraljic
         {
             RxString = "";
         }
-        /*
-        public void cleanUpReceivedData()
+        public void recordData()
         {
-            if (RxString.Length > 2)
+            temp_rec = Convert.ToString(timeStamp);
+            for (int i = 0; i < numOfDataReceived; i++)
             {
-                if (RxString.IndexOf("\n") != -1)
-                {
-                    RxStringComplete = true;
-                    RxString = RxString.Replace("\r\n", "");
-                }
+                temp_rec = temp_rec + "," + splittedData[i];
             }
+            recordedString.Add(temp_rec);
+            temp_rec = "";
         }
-        */
+        public void clearOnStart()
+        {
+            recordedString.Clear();
+        }
     }
 }
