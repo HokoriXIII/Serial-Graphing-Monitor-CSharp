@@ -152,7 +152,7 @@ namespace SerialPlotter_AleksijKraljic
                 {
                     channels[i].measured_data = measurement.splittedData[i];
                 }
-
+              
                 BeginInvoke(new EventHandler(toBuffer));
 
                 if (saveCheckBox.Checked)
@@ -160,8 +160,7 @@ namespace SerialPlotter_AleksijKraljic
                     measurement.recordData();
                 }
 
-                measurement.clearRxString();  
-
+                measurement.clearRxString(); 
         }
 
         private void btn_start_Click(object sender, EventArgs e)

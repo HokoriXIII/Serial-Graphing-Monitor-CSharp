@@ -18,6 +18,7 @@ namespace SerialPlotter_AleksijKraljic
         public List<string> recordedString = new List<string>();
         private string temp_rec;
 
+
         // Methods
         public void splitReceivedString()
         {

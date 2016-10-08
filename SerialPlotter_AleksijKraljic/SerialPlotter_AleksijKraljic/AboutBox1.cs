@@ -20,6 +20,7 @@ namespace SerialPlotter_AleksijKraljic
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
+            this.textBoxDescription.Text = "DIRECTIONS: Send up to 4 values separated by \"_\" (underscore): Example:\" x_y_z_w\n";
         }
 
         #region Assembly Attribute Accessors
