@@ -9,14 +9,16 @@ using System.Drawing;
 namespace SerialPlotter_AleksijKraljic
 {
     class Channel
-    {       
-        public LineItem curve;
-        public int lineID = 0;
-        public Color lineColor;
-        public RollingPointPairList ringBuffer = new RollingPointPairList(2500);
-        public double timeStamp = 0;
-        public string measured_data;
+    {
+        // Properties
+        public LineItem curve { get; set; }
+        public int lineID { get; set; }
+        public Color lineColor { get; set; }
+        public RollingPointPairList ringBuffer = new RollingPointPairList(3000);
+        public double timeStamp { get; set; }
+        public string measured_data { get; set; }
 
+        // Methods
         public Channel(int ID)
         {
             lineID = ID;

@@ -10,12 +10,14 @@ namespace SerialPlotter_AleksijKraljic
 {
     public class Measurement
     {
-         // Fields
-        public string RxString;
-        public string[] splittedData;
-        public int numOfDataReceived;
-        public double timeStamp = 0;
+         // Properites
+        public string RxString {get;set;}
+        public string[] splittedData {get; set;}
+        public int numOfDataReceived {get; set;}
+        public double timeStamp { get; set; }
         public List<string> recordedString = new List<string>();
+
+        // Fields
         private string temp_rec;
 
 
