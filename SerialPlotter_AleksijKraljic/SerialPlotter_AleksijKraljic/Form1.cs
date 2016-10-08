@@ -112,7 +112,7 @@ namespace SerialPlotter_AleksijKraljic
             {
                 channels.Add(new Channel(i));
             }
-            
+
             try
             {
                 serialPort1.Open();
