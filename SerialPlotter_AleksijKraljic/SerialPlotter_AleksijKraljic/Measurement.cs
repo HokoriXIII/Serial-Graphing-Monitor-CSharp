@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZedGraph;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace SerialPlotter_AleksijKraljic
 {
@@ -17,11 +18,25 @@ namespace SerialPlotter_AleksijKraljic
         public double timeStamp { get; set; }
         public List<string> recordedString = new List<string>();
 
+        Stopwatch s_watch = new Stopwatch();
+
         // Fields
         private string temp_rec;
 
-
         // Methods
+        public void start()
+        {
+            s_watch.Start();
+        }
+        public void stop()
+        {
+            s_watch.Stop();
+            s_watch.Reset();
+        }
+        public void setTimeStamp()
+        {
+            timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
+        }
         public void splitReceivedString()
         {
             splittedData = RxString.Split('_');

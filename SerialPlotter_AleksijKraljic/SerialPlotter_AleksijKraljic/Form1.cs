@@ -21,9 +21,6 @@ namespace SerialPlotter_AleksijKraljic
 
         string fileName = "measured_data.txt";
 
-        // stopwatch for recording timestamp
-        Stopwatch s_watch = new Stopwatch();
-
         List<string> write_D = new List<string>();
 
         Color[] lineColors = { Color.Blue, Color.Red, Color.Green, Color.Black, Color.Purple, Color.Orange };
@@ -171,7 +168,7 @@ namespace SerialPlotter_AleksijKraljic
             btn_disconnect.Enabled = false;
 
             timer1.Start();
-            s_watch.Start();
+            measurement.start();
 
             akMonitor.CurveList.Clear();
 
@@ -204,8 +201,7 @@ namespace SerialPlotter_AleksijKraljic
             channelSelectBoxes.ForEach(c => c.Checked = false);
 
             timer1.Stop();
-            s_watch.Stop();
-            s_watch.Reset();
+            measurement.stop();
 
             if (saveCheckBox.Checked)
             {
@@ -295,7 +291,7 @@ namespace SerialPlotter_AleksijKraljic
 
         private void toBuffer(object sender, EventArgs e)
         {
-            measurement.timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
+            measurement.setTimeStamp();
             try
             {
                 for (int i = 0; i < measurement.numOfDataReceived; i++)
