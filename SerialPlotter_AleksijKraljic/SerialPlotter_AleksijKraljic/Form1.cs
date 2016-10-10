@@ -38,7 +38,7 @@ namespace SerialPlotter_AleksijKraljic
         public Form1()
         {
             InitializeComponent();
-            
+
             // initial form object states
             btn_connect.Enabled = false;
             btn_disconnect.Enabled = false;
@@ -63,7 +63,7 @@ namespace SerialPlotter_AleksijKraljic
             channelSelectBoxes.Add(checkCh6);
 
             // initial form object states
-            channelSelectBoxes.ForEach(c => c.Enabled = true);
+            channelSelectBoxes.ForEach(c => c.Enabled = false);
             checkAutoY.Checked = true;
             numericUDmaxY.Enabled = false;
             numericUDminY.Enabled = false;
@@ -104,10 +104,12 @@ namespace SerialPlotter_AleksijKraljic
             serialPort1.PortName = comBox.Text;
             serialPort1.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
 
+
+            decimal bufferSize = numericUDbuffer.Value;
             // Construct objects for measurement
             for (int i = 0; i < 6; i++)
             {
-                channels.Add(new Channel(i));
+                channels.Add(new Channel(i,(int)bufferSize));
             }
             
             try
@@ -128,9 +130,10 @@ namespace SerialPlotter_AleksijKraljic
                 comBox.Enabled = false;
                 baudBox.Enabled = false;
                 btn_refreshCOM.Enabled = false;
+                numericUDbuffer.Enabled = false;
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
                 serialPort1.Write("b");
-                channelSelectBoxes.ForEach(c => c.Enabled = true);
+                channelSelectBoxes.ForEach(c => c.Enabled = false);
             }
         }
 
@@ -139,7 +142,7 @@ namespace SerialPlotter_AleksijKraljic
                 if (serialPort1.IsOpen)
                 {
                     try { measurement.RxString += serialPort1.ReadLine(); }
-                    catch { }
+                    catch { measurement.RxString += "X"; }
                 }
 
                 measurement.splitReceivedString();
@@ -176,6 +179,7 @@ namespace SerialPlotter_AleksijKraljic
             measurement.clearOnStart();
             write_D.Clear();
 
+            
             for (int i = 0; i < measurement.numOfDataReceived; i++)
             {
                 channels[i].lineColor = lineColors[i];
@@ -245,6 +249,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             if (serialPort1.IsOpen)
             {
+                System.Threading.Thread.Sleep(10);
                 serialPort1.Close();
                 System.Threading.Thread.Sleep(50);
 
@@ -257,6 +262,8 @@ namespace SerialPlotter_AleksijKraljic
             comBox.Enabled = true;
             baudBox.Enabled = true;
             btn_refreshCOM.Enabled = true;
+            numericUDbuffer.Enabled = true;
+            channels.Clear();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
