@@ -58,7 +58,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="ZedGraph">
-      <HintPath>..\..\..\..\..\Desktop\FS UNI Dokumenti\Mehatronski sistemi\MS - Vaja 2 - Primeri\Zunanja_knjiznica_ZedGraph\zedgraph_dll_v515\zedgraph_dll_v515\zedgraph_dll_v5.1.5\ZedGraph.dll</HintPath>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2013\Projects\MS_zunanjeKnjiznice_ZEDGRAF\ZedGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

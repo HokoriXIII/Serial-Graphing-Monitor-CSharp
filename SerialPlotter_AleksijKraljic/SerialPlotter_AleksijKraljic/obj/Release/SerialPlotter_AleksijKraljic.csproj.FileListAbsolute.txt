@@ -1,0 +1,11 @@
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\bin\Release\SerialPlotter_AleksijKraljic.exe.config
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.csprojResolveAssemblyReference.cache
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.AboutBox1.resources
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.Form1.resources
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.Properties.Resources.resources
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.csproj.GenerateResource.Cache
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\bin\Release\SerialPlotter_AleksijKraljic.exe
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\bin\Release\SerialPlotter_AleksijKraljic.pdb
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\bin\Release\ZedGraph.dll
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.exe
+C:\Users\Aleksij\Desktop\axkralj990 GitHub\Serial-Graphing-Monitor-CSharp\SerialPlotter_AleksijKraljic\SerialPlotter_AleksijKraljic\obj\Release\SerialPlotter_AleksijKraljic.pdb
