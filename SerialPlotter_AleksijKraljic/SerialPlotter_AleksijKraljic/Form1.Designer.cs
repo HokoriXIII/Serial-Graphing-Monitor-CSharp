@@ -66,6 +66,8 @@
             this.fileNameBox = new System.Windows.Forms.TextBox();
             this.saveCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.numericUDbuffer = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).BeginInit();
@@ -75,6 +77,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUDlineWidth)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_refreshCOM
@@ -174,9 +178,9 @@
             // zedGraphControl1
             // 
             this.zedGraphControl1.AutoSize = true;
-            this.zedGraphControl1.Location = new System.Drawing.Point(11, 260);
+            this.zedGraphControl1.Location = new System.Drawing.Point(11, 272);
             this.zedGraphControl1.MaximumSize = new System.Drawing.Size(595, 408);
-            this.zedGraphControl1.MinimumSize = new System.Drawing.Size(595, 408);
+            this.zedGraphControl1.MinimumSize = new System.Drawing.Size(300, 300);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -185,7 +189,7 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(595, 408);
+            this.zedGraphControl1.Size = new System.Drawing.Size(595, 392);
             this.zedGraphControl1.TabIndex = 17;
             // 
             // timer1
@@ -196,6 +200,7 @@
             // checkCh1
             // 
             this.checkCh1.AutoSize = true;
+            this.checkCh1.Enabled = false;
             this.checkCh1.Location = new System.Drawing.Point(6, 24);
             this.checkCh1.Name = "checkCh1";
             this.checkCh1.Size = new System.Drawing.Size(74, 17);
@@ -206,6 +211,7 @@
             // checkCh2
             // 
             this.checkCh2.AutoSize = true;
+            this.checkCh2.Enabled = false;
             this.checkCh2.Location = new System.Drawing.Point(6, 47);
             this.checkCh2.Name = "checkCh2";
             this.checkCh2.Size = new System.Drawing.Size(74, 17);
@@ -216,6 +222,7 @@
             // checkCh3
             // 
             this.checkCh3.AutoSize = true;
+            this.checkCh3.Enabled = false;
             this.checkCh3.Location = new System.Drawing.Point(6, 70);
             this.checkCh3.Name = "checkCh3";
             this.checkCh3.Size = new System.Drawing.Size(74, 17);
@@ -226,6 +233,7 @@
             // checkCh4
             // 
             this.checkCh4.AutoSize = true;
+            this.checkCh4.Enabled = false;
             this.checkCh4.Location = new System.Drawing.Point(6, 94);
             this.checkCh4.Name = "checkCh4";
             this.checkCh4.Size = new System.Drawing.Size(74, 17);
@@ -265,6 +273,7 @@
             // checkCh6
             // 
             this.checkCh6.AutoSize = true;
+            this.checkCh6.Enabled = false;
             this.checkCh6.Location = new System.Drawing.Point(6, 141);
             this.checkCh6.Name = "checkCh6";
             this.checkCh6.Size = new System.Drawing.Size(74, 17);
@@ -275,6 +284,7 @@
             // checkCh5
             // 
             this.checkCh5.AutoSize = true;
+            this.checkCh5.Enabled = false;
             this.checkCh5.Location = new System.Drawing.Point(6, 117);
             this.checkCh5.Name = "checkCh5";
             this.checkCh5.Size = new System.Drawing.Size(74, 17);
@@ -507,11 +517,44 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.numericUDbuffer);
+            this.groupBox5.Location = new System.Drawing.Point(12, 217);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(114, 49);
+            this.groupBox5.TabIndex = 42;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Buffer Size";
+            // 
+            // numericUDbuffer
+            // 
+            this.numericUDbuffer.Location = new System.Drawing.Point(5, 19);
+            this.numericUDbuffer.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUDbuffer.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUDbuffer.Name = "numericUDbuffer";
+            this.numericUDbuffer.Size = new System.Drawing.Size(104, 20);
+            this.numericUDbuffer.TabIndex = 43;
+            this.numericUDbuffer.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(618, 680);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -544,6 +587,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -587,6 +632,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUDlineWidth;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.NumericUpDown numericUDbuffer;
     }
 }
 

@@ -35,10 +35,12 @@ namespace SerialPlotter_AleksijKraljic
 
         List<CheckBox> channelSelectBoxes = new List<CheckBox>();
 
+        bool startCondition = false;
+
         public Form1()
         {
             InitializeComponent();
-            
+
             // initial form object states
             btn_connect.Enabled = false;
             btn_disconnect.Enabled = false;
@@ -63,7 +65,7 @@ namespace SerialPlotter_AleksijKraljic
             channelSelectBoxes.Add(checkCh6);
 
             // initial form object states
-            channelSelectBoxes.ForEach(c => c.Enabled = true);
+            channelSelectBoxes.ForEach(c => c.Enabled = false);
             checkAutoY.Checked = true;
             numericUDmaxY.Enabled = false;
             numericUDminY.Enabled = false;
@@ -104,14 +106,17 @@ namespace SerialPlotter_AleksijKraljic
             serialPort1.PortName = comBox.Text;
             serialPort1.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
 
+
+            decimal bufferSize = numericUDbuffer.Value;
             // Construct objects for measurement
             for (int i = 0; i < 6; i++)
             {
-                channels.Add(new Channel(i));
+                channels.Add(new Channel(i,(int)bufferSize));
             }
             
             try
             {
+                serialPort1.ReadTimeout = 1000;
                 serialPort1.Open();
             }
             catch
@@ -128,18 +133,26 @@ namespace SerialPlotter_AleksijKraljic
                 comBox.Enabled = false;
                 baudBox.Enabled = false;
                 btn_refreshCOM.Enabled = false;
+                numericUDbuffer.Enabled = false;
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
                 serialPort1.Write("b");
-                channelSelectBoxes.ForEach(c => c.Enabled = true);
+                channelSelectBoxes.ForEach(c => c.Enabled = false);
             }
         }
-
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            if (startCondition)
+            {
                 if (serialPort1.IsOpen)
                 {
                     try { measurement.RxString += serialPort1.ReadLine(); }
-                    catch { }
+                    catch (TimeoutException)
+                    {
+                        startCondition = false;
+                        this.BeginInvoke(new EventHandler(btn_stop_Click));
+                        MessageBox.Show("Invalid data received. (Check baudrate setting)", "My Application",
+                        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
                 }
 
                 measurement.splitReceivedString();
@@ -149,7 +162,7 @@ namespace SerialPlotter_AleksijKraljic
                 {
                     channels[i].measured_data = measurement.splittedData[i];
                 }
-              
+
                 BeginInvoke(new EventHandler(toBuffer));
 
                 if (saveCheckBox.Checked)
@@ -158,11 +171,15 @@ namespace SerialPlotter_AleksijKraljic
                 }
 
                 measurement.clearRxString(); 
+            }
         }
 
         private void btn_start_Click(object sender, EventArgs e)
         {
             serialPort1.Write("a");
+            startCondition = true;
+            System.Threading.Thread.Sleep(30);
+
             btn_start.Enabled = false;
             btn_stop.Enabled = true;
             btn_disconnect.Enabled = false;
@@ -176,6 +193,7 @@ namespace SerialPlotter_AleksijKraljic
             measurement.clearOnStart();
             write_D.Clear();
 
+            
             for (int i = 0; i < measurement.numOfDataReceived; i++)
             {
                 channels[i].lineColor = lineColors[i];
@@ -195,6 +213,7 @@ namespace SerialPlotter_AleksijKraljic
         private void btn_stop_Click(object sender, EventArgs e)
         {
             serialPort1.Write("b");
+            startCondition = false;
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
             btn_disconnect.Enabled = true;
@@ -245,6 +264,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             if (serialPort1.IsOpen)
             {
+                System.Threading.Thread.Sleep(10);
                 serialPort1.Close();
                 System.Threading.Thread.Sleep(50);
 
@@ -257,6 +277,8 @@ namespace SerialPlotter_AleksijKraljic
             comBox.Enabled = true;
             baudBox.Enabled = true;
             btn_refreshCOM.Enabled = true;
+            numericUDbuffer.Enabled = true;
+            channels.Clear();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -292,15 +314,11 @@ namespace SerialPlotter_AleksijKraljic
         private void toBuffer(object sender, EventArgs e)
         {
             measurement.setTimeStamp();
-            try
-            {
                 for (int i = 0; i < measurement.numOfDataReceived; i++)
                 {
                     if (channelSelectBoxes[i].Checked) { channels[i].addToBuffer(); }
                     else { channels[i].ringBuffer.Clear(); }
                 }
-            }
-            catch { }
         }
 
         private void plot_data(object sender, EventArgs e)

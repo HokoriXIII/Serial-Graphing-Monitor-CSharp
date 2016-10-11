@@ -14,14 +14,16 @@ namespace SerialPlotter_AleksijKraljic
         public LineItem curve { get; set; }
         public int lineID { get; set; }
         public Color lineColor { get; set; }
-        public RollingPointPairList ringBuffer = new RollingPointPairList(3000);
+
+        public RollingPointPairList ringBuffer;
         public double timeStamp { get; set; }
         public string measured_data { get; set; }
 
         // Methods
-        public Channel(int ID)
+        public Channel(int ID, Int32 bufferSize)
         {
             lineID = ID;
+            ringBuffer = new RollingPointPairList(bufferSize);
         }
         public void clearOnStart()
         {

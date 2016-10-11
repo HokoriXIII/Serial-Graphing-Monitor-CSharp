@@ -39,8 +39,20 @@ namespace SerialPlotter_AleksijKraljic
         }
         public void splitReceivedString()
         {
-            splittedData = RxString.Split('_');
-            numOfDataReceived = splittedData.Length;
+            try
+            {
+                splittedData = RxString.Split('_');
+                numOfDataReceived = splittedData.Length;
+
+                if ((splittedData[numOfDataReceived - 1] == "") && (numOfDataReceived > 1))
+                {
+                    numOfDataReceived = numOfDataReceived - 1;
+                }
+            }
+            catch (NullReferenceException)
+            { 
+
+            }
         }
         public void clearRxString()
         {
