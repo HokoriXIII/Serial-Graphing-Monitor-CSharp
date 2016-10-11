@@ -43,15 +43,15 @@ namespace SerialPlotter_AleksijKraljic
             {
                 splittedData = RxString.Split('_');
                 numOfDataReceived = splittedData.Length;
+
+                if ((splittedData[numOfDataReceived - 1] == "") && (numOfDataReceived > 1))
+                {
+                    numOfDataReceived = numOfDataReceived - 1;
+                }
             }
-            catch
-            {
-                splittedData[0] = "X";
-                numOfDataReceived = 1;
-            }
-            if ((splittedData[numOfDataReceived-1] == "") && (numOfDataReceived > 1))
-            {
-                numOfDataReceived = numOfDataReceived - 1;
+            catch (NullReferenceException)
+            { 
+
             }
         }
         public void clearRxString()

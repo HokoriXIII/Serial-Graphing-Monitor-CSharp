@@ -41,9 +41,8 @@ namespace SerialPlotter_AleksijKraljic
             }
             catch
             {
-                ringBuffer.Add(timeStamp / 1000, 7);
+                ringBuffer.Add(timeStamp / 1000, 0);
             }
-
         }
     }
 }
