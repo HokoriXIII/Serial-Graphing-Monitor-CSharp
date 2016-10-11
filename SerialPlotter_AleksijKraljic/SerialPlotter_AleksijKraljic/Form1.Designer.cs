@@ -66,8 +66,10 @@
             this.fileNameBox = new System.Windows.Forms.TextBox();
             this.saveCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.separatorBox = new System.Windows.Forms.TextBox();
             this.numericUDbuffer = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).BeginInit();
@@ -77,7 +79,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUDlineWidth)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,7 +150,7 @@
             // baudBox
             // 
             this.baudBox.FormattingEnabled = true;
-            this.baudBox.Location = new System.Drawing.Point(4, 103);
+            this.baudBox.Location = new System.Drawing.Point(4, 100);
             this.baudBox.Margin = new System.Windows.Forms.Padding(2);
             this.baudBox.Name = "baudBox";
             this.baudBox.Size = new System.Drawing.Size(109, 21);
@@ -168,7 +169,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 88);
+            this.label2.Location = new System.Drawing.Point(5, 85);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
@@ -178,7 +179,7 @@
             // zedGraphControl1
             // 
             this.zedGraphControl1.AutoSize = true;
-            this.zedGraphControl1.Location = new System.Drawing.Point(11, 272);
+            this.zedGraphControl1.Location = new System.Drawing.Point(11, 254);
             this.zedGraphControl1.MaximumSize = new System.Drawing.Size(595, 408);
             this.zedGraphControl1.MinimumSize = new System.Drawing.Size(300, 300);
             this.zedGraphControl1.Name = "zedGraphControl1";
@@ -189,7 +190,7 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(595, 392);
+            this.zedGraphControl1.Size = new System.Drawing.Size(595, 408);
             this.zedGraphControl1.TabIndex = 17;
             // 
             // timer1
@@ -243,6 +244,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.separatorBox);
+            this.groupBox1.Controls.Add(this.numericUDbuffer);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.comBox);
             this.groupBox1.Controls.Add(this.baudBox);
             this.groupBox1.Controls.Add(this.label1);
@@ -250,7 +255,7 @@
             this.groupBox1.Controls.Add(this.btn_refreshCOM);
             this.groupBox1.Location = new System.Drawing.Point(12, 77);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(124, 134);
+            this.groupBox1.Size = new System.Drawing.Size(124, 171);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Config";
@@ -517,19 +522,27 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
             // 
-            // groupBox5
+            // label4
             // 
-            this.groupBox5.Controls.Add(this.numericUDbuffer);
-            this.groupBox5.Location = new System.Drawing.Point(12, 217);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(114, 49);
-            this.groupBox5.TabIndex = 42;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Buffer Size";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(64, 126);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 36;
+            this.label4.Text = "Separator";
+            // 
+            // separatorBox
+            // 
+            this.separatorBox.Location = new System.Drawing.Point(67, 143);
+            this.separatorBox.Name = "separatorBox";
+            this.separatorBox.Size = new System.Drawing.Size(46, 20);
+            this.separatorBox.TabIndex = 37;
+            this.separatorBox.Text = "_";
+            this.separatorBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // numericUDbuffer
             // 
-            this.numericUDbuffer.Location = new System.Drawing.Point(5, 19);
+            this.numericUDbuffer.Location = new System.Drawing.Point(7, 143);
             this.numericUDbuffer.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -541,7 +554,7 @@
             0,
             0});
             this.numericUDbuffer.Name = "numericUDbuffer";
-            this.numericUDbuffer.Size = new System.Drawing.Size(104, 20);
+            this.numericUDbuffer.Size = new System.Drawing.Size(52, 20);
             this.numericUDbuffer.TabIndex = 43;
             this.numericUDbuffer.Value = new decimal(new int[] {
             1000,
@@ -549,12 +562,21 @@
             0,
             0});
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 126);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Buffer Size";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(618, 680);
-            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -587,7 +609,6 @@
             this.menuStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -632,8 +653,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUDlineWidth;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox separatorBox;
         private System.Windows.Forms.NumericUpDown numericUDbuffer;
+        private System.Windows.Forms.Label label5;
     }
 }
 

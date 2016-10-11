@@ -36,6 +36,7 @@ namespace SerialPlotter_AleksijKraljic
         List<CheckBox> channelSelectBoxes = new List<CheckBox>();
 
         bool startCondition = false;
+        string separator = "_";
 
         public Form1()
         {
@@ -54,6 +55,8 @@ namespace SerialPlotter_AleksijKraljic
             string[] bauds = { "300", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "74880", "115200", "230400", "250000"};
             baudBox.DataSource = bauds;
             baudBox.SelectedIndex = 4;
+
+            separatorBox.Text = "_";
 
             fileNameBox.Text = fileName;
 
@@ -132,6 +135,7 @@ namespace SerialPlotter_AleksijKraljic
                 btn_stop.Enabled = false;
                 comBox.Enabled = false;
                 baudBox.Enabled = false;
+                separatorBox.Enabled = false;
                 btn_refreshCOM.Enabled = false;
                 numericUDbuffer.Enabled = false;
                 serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
@@ -155,7 +159,7 @@ namespace SerialPlotter_AleksijKraljic
                     }
                 }
 
-                measurement.splitReceivedString();
+                measurement.splitReceivedString(Convert.ToChar(separatorBox.Text));
 
                 channels.ForEach(c => c.timeStamp = measurement.timeStamp);
                 for (int i = 0; i < measurement.numOfDataReceived; i++)
@@ -278,6 +282,7 @@ namespace SerialPlotter_AleksijKraljic
             baudBox.Enabled = true;
             btn_refreshCOM.Enabled = true;
             numericUDbuffer.Enabled = true;
+            separatorBox.Enabled = true;
             channels.Clear();
         }
 

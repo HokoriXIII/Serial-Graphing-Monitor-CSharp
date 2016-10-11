@@ -37,11 +37,11 @@ namespace SerialPlotter_AleksijKraljic
         {
             timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
         }
-        public void splitReceivedString()
+        public void splitReceivedString(char Separator = '_')
         {
             try
             {
-                splittedData = RxString.Split('_');
+                splittedData = RxString.Split(Separator);
                 numOfDataReceived = splittedData.Length;
 
                 if ((splittedData[numOfDataReceived - 1] == "") && (numOfDataReceived > 1))
