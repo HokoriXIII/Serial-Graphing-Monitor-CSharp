@@ -69,10 +69,10 @@
             this.fileNameBox = new System.Windows.Forms.TextBox();
             this.saveCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btn_browse = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.directoryBox = new System.Windows.Forms.TextBox();
+            this.btn_browse = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -578,16 +578,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
             // 
-            // btn_browse
-            // 
-            this.btn_browse.Location = new System.Drawing.Point(6, 42);
-            this.btn_browse.Name = "btn_browse";
-            this.btn_browse.Size = new System.Drawing.Size(122, 23);
-            this.btn_browse.TabIndex = 41;
-            this.btn_browse.Text = "Change Directory";
-            this.btn_browse.UseVisualStyleBackColor = true;
-            this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -603,6 +593,17 @@
             this.directoryBox.Name = "directoryBox";
             this.directoryBox.Size = new System.Drawing.Size(122, 20);
             this.directoryBox.TabIndex = 43;
+            this.directoryBox.TextChanged += new System.EventHandler(this.directoryBox_TextChanged);
+            // 
+            // btn_browse
+            // 
+            this.btn_browse.Location = new System.Drawing.Point(6, 42);
+            this.btn_browse.Name = "btn_browse";
+            this.btn_browse.Size = new System.Drawing.Size(122, 23);
+            this.btn_browse.TabIndex = 41;
+            this.btn_browse.Text = "Change Directory";
+            this.btn_browse.UseVisualStyleBackColor = true;
+            this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
             // Form1
             // 

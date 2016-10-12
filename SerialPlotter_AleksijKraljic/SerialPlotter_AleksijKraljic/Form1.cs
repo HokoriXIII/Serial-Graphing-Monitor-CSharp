@@ -83,6 +83,8 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.YAxis.MajorGrid.IsVisible = true;
 
             fileNameBox.Enabled = true;
+
+            directoryBox.Text = myDirectory;
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -421,6 +423,11 @@ namespace SerialPlotter_AleksijKraljic
                 myDirectory = folderBrowserDialog1.SelectedPath;
                 directoryBox.Text = myDirectory;
             }
+        }
+
+        private void directoryBox_TextChanged(object sender, EventArgs e)
+        {
+            myDirectory = directoryBox.Text;
         }
     }
 }
