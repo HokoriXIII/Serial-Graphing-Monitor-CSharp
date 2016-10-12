@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.btn_refreshCOM = new System.Windows.Forms.Button();
             this.btn_connect = new System.Windows.Forms.Button();
             this.btn_disconnect = new System.Windows.Forms.Button();
@@ -47,6 +46,10 @@
             this.checkCh3 = new System.Windows.Forms.CheckBox();
             this.checkCh4 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.separatorBox = new System.Windows.Forms.TextBox();
+            this.numericUDbuffer = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.checkCh6 = new System.Windows.Forms.CheckBox();
             this.checkCh5 = new System.Windows.Forms.CheckBox();
@@ -66,11 +69,12 @@
             this.fileNameBox = new System.Windows.Forms.TextBox();
             this.saveCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.separatorBox = new System.Windows.Forms.TextBox();
-            this.numericUDbuffer = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btn_browse = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.directoryBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDmaxY)).BeginInit();
@@ -79,7 +83,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUDlineWidth)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_refreshCOM
@@ -259,6 +262,56 @@
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Config";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(64, 126);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 36;
+            this.label4.Text = "Separator";
+            // 
+            // separatorBox
+            // 
+            this.separatorBox.Location = new System.Drawing.Point(67, 143);
+            this.separatorBox.Name = "separatorBox";
+            this.separatorBox.Size = new System.Drawing.Size(46, 20);
+            this.separatorBox.TabIndex = 37;
+            this.separatorBox.Text = "_";
+            this.separatorBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // numericUDbuffer
+            // 
+            this.numericUDbuffer.Location = new System.Drawing.Point(7, 143);
+            this.numericUDbuffer.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUDbuffer.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUDbuffer.Name = "numericUDbuffer";
+            this.numericUDbuffer.Size = new System.Drawing.Size(52, 20);
+            this.numericUDbuffer.TabIndex = 43;
+            this.numericUDbuffer.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 126);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Buffer Size";
             // 
             // groupBox2
             // 
@@ -486,7 +539,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 39);
+            this.label7.Location = new System.Drawing.Point(3, 108);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 36;
@@ -494,9 +547,9 @@
             // 
             // fileNameBox
             // 
-            this.fileNameBox.Location = new System.Drawing.Point(5, 55);
+            this.fileNameBox.Location = new System.Drawing.Point(6, 124);
             this.fileNameBox.Name = "fileNameBox";
-            this.fileNameBox.Size = new System.Drawing.Size(123, 20);
+            this.fileNameBox.Size = new System.Drawing.Size(122, 20);
             this.fileNameBox.TabIndex = 37;
             // 
             // saveCheckBox
@@ -512,65 +565,44 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.directoryBox);
+            this.groupBox3.Controls.Add(this.btn_browse);
             this.groupBox3.Controls.Add(this.saveCheckBox);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.fileNameBox);
             this.groupBox3.Location = new System.Drawing.Point(398, 27);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(135, 82);
+            this.groupBox3.Size = new System.Drawing.Size(137, 150);
             this.groupBox3.TabIndex = 41;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output";
             // 
-            // label4
+            // btn_browse
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(64, 126);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 36;
-            this.label4.Text = "Separator";
+            this.btn_browse.Location = new System.Drawing.Point(6, 42);
+            this.btn_browse.Name = "btn_browse";
+            this.btn_browse.Size = new System.Drawing.Size(122, 23);
+            this.btn_browse.TabIndex = 41;
+            this.btn_browse.Text = "Change Directory";
+            this.btn_browse.UseVisualStyleBackColor = true;
+            this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
-            // separatorBox
+            // label6
             // 
-            this.separatorBox.Location = new System.Drawing.Point(67, 143);
-            this.separatorBox.Name = "separatorBox";
-            this.separatorBox.Size = new System.Drawing.Size(46, 20);
-            this.separatorBox.TabIndex = 37;
-            this.separatorBox.Text = "_";
-            this.separatorBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 13);
+            this.label6.TabIndex = 42;
+            this.label6.Text = "Directory";
             // 
-            // numericUDbuffer
+            // directoryBox
             // 
-            this.numericUDbuffer.Location = new System.Drawing.Point(7, 143);
-            this.numericUDbuffer.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUDbuffer.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUDbuffer.Name = "numericUDbuffer";
-            this.numericUDbuffer.Size = new System.Drawing.Size(52, 20);
-            this.numericUDbuffer.TabIndex = 43;
-            this.numericUDbuffer.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 126);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Buffer Size";
+            this.directoryBox.Location = new System.Drawing.Point(6, 84);
+            this.directoryBox.Name = "directoryBox";
+            this.directoryBox.Size = new System.Drawing.Size(122, 20);
+            this.directoryBox.TabIndex = 43;
             // 
             // Form1
             // 
@@ -597,6 +629,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDtime)).EndInit();
@@ -609,7 +642,6 @@
             this.menuStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,7 +649,6 @@
 
         #endregion
 
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button btn_refreshCOM;
         private System.Windows.Forms.Button btn_connect;
         private System.Windows.Forms.Button btn_disconnect;
@@ -657,6 +688,10 @@
         private System.Windows.Forms.TextBox separatorBox;
         private System.Windows.Forms.NumericUpDown numericUDbuffer;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox directoryBox;
+        private System.Windows.Forms.Button btn_browse;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
 

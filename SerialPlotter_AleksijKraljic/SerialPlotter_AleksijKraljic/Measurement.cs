@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using ZedGraph;
 using System.Drawing;
 using System.Diagnostics;
+using System.IO.Ports;
 
 namespace SerialPlotter_AleksijKraljic
 {
-    public class Measurement
+    public class Measurement : SerialPort
     {
          // Properites
         public string RxString {get;set;}
