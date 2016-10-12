@@ -247,6 +247,7 @@ namespace SerialPlotter_AleksijKraljic
 
             timer1.Stop();
             measurement.stop();
+            channelSelectBoxes.ForEach(c => c.Enabled = false);
 
             if (saveCheckBox.Checked)
             {
