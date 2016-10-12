@@ -37,7 +37,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
         }
-        public void splitReceivedString(char Separator = '_')
+        public void splitReceivedString(char Separator)
         {
             try
             {

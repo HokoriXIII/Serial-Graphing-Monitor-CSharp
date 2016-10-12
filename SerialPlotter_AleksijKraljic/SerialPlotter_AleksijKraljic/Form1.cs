@@ -108,7 +108,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             serialPort1.PortName = comBox.Text;
             serialPort1.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
-
+            startCondition = true;
 
             decimal bufferSize = numericUDbuffer.Value;
             // Construct objects for measurement
@@ -142,6 +142,7 @@ namespace SerialPlotter_AleksijKraljic
                 serialPort1.Write("b");
                 channelSelectBoxes.ForEach(c => c.Enabled = false);
             }
+            startCondition = false;
         }
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -154,7 +155,7 @@ namespace SerialPlotter_AleksijKraljic
                     {
                         startCondition = false;
                         this.BeginInvoke(new EventHandler(btn_stop_Click));
-                        MessageBox.Show("Invalid data received. (Check baudrate setting)", "My Application",
+                        MessageBox.Show("Invalid data received. (Check baud rate or separator setting)", "My Application",
                         MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     }
                 }
@@ -180,37 +181,49 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_start_Click(object sender, EventArgs e)
         {
-            serialPort1.Write("a");
-            startCondition = true;
-            System.Threading.Thread.Sleep(30);
-
-            btn_start.Enabled = false;
-            btn_stop.Enabled = true;
-            btn_disconnect.Enabled = false;
-
-            timer1.Start();
-            measurement.start();
-
-            akMonitor.CurveList.Clear();
-
-            channels.ForEach(c => c.clearOnStart());
-            measurement.clearOnStart();
-            write_D.Clear();
-
-            
-            for (int i = 0; i < measurement.numOfDataReceived; i++)
+            for (int j = 0; j < 10; j++)
             {
-                channels[i].lineColor = lineColors[i];
-                channels[i].curve = akMonitor.AddCurve(null, channels[i].ringBuffer, channels[i].lineColor, SymbolType.None);
-                channels[i].setLineWidth(1);
-            }
+                serialPort1.Write("a");
+                startCondition = true;
 
-            for (int i = 0; i < 6; i++)
-            {
-                if (i < measurement.numOfDataReceived)
-                    channelSelectBoxes[i].Enabled = true;
-                else
-                    channelSelectBoxes[i].Enabled = false;
+                btn_start.Enabled = false;
+                btn_stop.Enabled = true;
+                btn_disconnect.Enabled = false;
+
+                timer1.Start();
+                measurement.start();
+
+                akMonitor.CurveList.Clear();
+
+                channels.ForEach(c => c.clearOnStart());
+                measurement.clearOnStart();
+                write_D.Clear();
+
+                if (j > 4)
+                {
+                    for (int i = 0; i < measurement.numOfDataReceived; i++)
+                    {
+                        channels[i].lineColor = lineColors[i];
+                        channels[i].curve = akMonitor.AddCurve(null, channels[i].ringBuffer, channels[i].lineColor, SymbolType.None);
+                        channels[i].setLineWidth(1);
+                    }
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (i < measurement.numOfDataReceived)
+                            channelSelectBoxes[i].Enabled = true;
+                        else
+                            channelSelectBoxes[i].Enabled = false;
+                    }
+                }
+
+                if (j!=9)
+                {
+                    serialPort1.Write("b");
+                    startCondition = false;
+                    timer1.Stop();
+                    measurement.stop();
+                }
             }
         }
 
