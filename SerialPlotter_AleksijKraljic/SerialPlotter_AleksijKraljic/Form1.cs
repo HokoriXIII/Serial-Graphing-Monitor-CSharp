@@ -36,7 +36,7 @@ namespace SerialPlotter_AleksijKraljic
         List<CheckBox> channelSelectBoxes = new List<CheckBox>();
 
         bool startCondition = false;
-        string separator = "_";
+        string myDirectory = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
 
         public Form1()
         {
@@ -83,6 +83,8 @@ namespace SerialPlotter_AleksijKraljic
             akMonitor.YAxis.MajorGrid.IsVisible = true;
 
             fileNameBox.Enabled = true;
+
+            directoryBox.Text = myDirectory;
         }
 
         private void btn_refreshCOM_Click(object sender, EventArgs e)
@@ -106,8 +108,8 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_connect_Click(object sender, EventArgs e)
         {
-            serialPort1.PortName = comBox.Text;
-            serialPort1.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
+            measurement.PortName = comBox.Text;
+            measurement.BaudRate = int.Parse(baudBox.SelectedItem.ToString());
             startCondition = true;
 
             decimal bufferSize = numericUDbuffer.Value;
@@ -119,15 +121,15 @@ namespace SerialPlotter_AleksijKraljic
             
             try
             {
-                serialPort1.ReadTimeout = 1000;
-                serialPort1.Open();
+                measurement.ReadTimeout = 1000;
+                measurement.Open();
             }
             catch
             {
                 MessageBox.Show("No devices found");
             }
 
-            if (serialPort1.IsOpen)
+            if (measurement.IsOpen)
             {
                 btn_connect.Enabled = false;
                 btn_disconnect.Enabled = true;
@@ -138,24 +140,31 @@ namespace SerialPlotter_AleksijKraljic
                 separatorBox.Enabled = false;
                 btn_refreshCOM.Enabled = false;
                 numericUDbuffer.Enabled = false;
-                serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
-                serialPort1.Write("b");
+                measurement.DataReceived += new SerialDataReceivedEventHandler(measurement_DataReceived);
+                measurement.Write("b");
                 channelSelectBoxes.ForEach(c => c.Enabled = false);
             }
             startCondition = false;
         }
-        private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void measurement_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (startCondition)
             {
-                if (serialPort1.IsOpen)
+                if (measurement.IsOpen)
                 {
-                    try { measurement.RxString += serialPort1.ReadLine(); }
+                    try { measurement.RxString += measurement.ReadLine(); }
                     catch (TimeoutException)
                     {
                         startCondition = false;
                         this.BeginInvoke(new EventHandler(btn_stop_Click));
                         MessageBox.Show("Invalid data received. (Check baud rate or separator setting)", "My Application",
+                        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    catch
+                    {
+                        startCondition = false;
+                        this.BeginInvoke(new EventHandler(btn_stop_Click));
+                        MessageBox.Show("Error with the received data.", "My Application",
                         MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     }
                 }
@@ -183,7 +192,7 @@ namespace SerialPlotter_AleksijKraljic
         {
             for (int j = 0; j < 10; j++)
             {
-                serialPort1.Write("a");
+                measurement.Write("a");
                 startCondition = true;
 
                 btn_start.Enabled = false;
@@ -219,7 +228,7 @@ namespace SerialPlotter_AleksijKraljic
 
                 if (j!=9)
                 {
-                    serialPort1.Write("b");
+                    measurement.Write("b");
                     startCondition = false;
                     timer1.Stop();
                     measurement.stop();
@@ -229,7 +238,7 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_stop_Click(object sender, EventArgs e)
         {
-            serialPort1.Write("b");
+            measurement.Write("b");
             startCondition = false;
             btn_stop.Enabled = false;
             btn_start.Enabled = true;
@@ -238,6 +247,7 @@ namespace SerialPlotter_AleksijKraljic
 
             timer1.Stop();
             measurement.stop();
+            channelSelectBoxes.ForEach(c => c.Enabled = false);
 
             if (saveCheckBox.Checked)
             {
@@ -247,11 +257,7 @@ namespace SerialPlotter_AleksijKraljic
 
         private void save_measurements()
         {
-            string folder_path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            
-            //string fileName = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt");
-
-            string path = folder_path + "\\" + fileNameBox.Text;
+            string path = myDirectory + "\\" + fileNameBox.Text;
 
             using (StreamWriter sw = File.CreateText(path))
             {
@@ -279,10 +285,10 @@ namespace SerialPlotter_AleksijKraljic
 
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
-            if (serialPort1.IsOpen)
+            if (measurement.IsOpen)
             {
                 System.Threading.Thread.Sleep(10);
-                serialPort1.Close();
+                measurement.Close();
                 System.Threading.Thread.Sleep(50);
 
                 btn_connect.Enabled = true;
@@ -301,13 +307,13 @@ namespace SerialPlotter_AleksijKraljic
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (serialPort1.IsOpen) serialPort1.Write("b");
+            if (measurement.IsOpen) measurement.Write("b");
             System.Threading.Thread.Sleep(100);
 
             DialogResult dialogC = MessageBox.Show("Are you sure you want to exit?","Exit",MessageBoxButtons.YesNo);
             if (dialogC == DialogResult.Yes)
             {
-                if (serialPort1.IsOpen) serialPort1.Close();
+                if (measurement.IsOpen) measurement.Close();
                 Application.ExitThread();
             }
             else if (dialogC == DialogResult.No)
@@ -408,6 +414,21 @@ namespace SerialPlotter_AleksijKraljic
             {
                 channels[i].setLineWidth(Convert.ToSingle(numericUDlineWidth.Value));
             }
+        }
+
+        private void btn_browse_Click(object sender, EventArgs e)
+        {
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                myDirectory = folderBrowserDialog1.SelectedPath;
+                directoryBox.Text = myDirectory;
+            }
+        }
+
+        private void directoryBox_TextChanged(object sender, EventArgs e)
+        {
+            myDirectory = directoryBox.Text;
         }
     }
 }
