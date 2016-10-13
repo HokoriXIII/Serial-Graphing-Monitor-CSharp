@@ -182,6 +182,7 @@
             // zedGraphControl1
             // 
             this.zedGraphControl1.AutoSize = true;
+            this.zedGraphControl1.BackColor = System.Drawing.SystemColors.Control;
             this.zedGraphControl1.Location = new System.Drawing.Point(11, 254);
             this.zedGraphControl1.MaximumSize = new System.Drawing.Size(595, 408);
             this.zedGraphControl1.MinimumSize = new System.Drawing.Size(300, 300);
@@ -541,9 +542,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(3, 108);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(54, 13);
             this.label7.TabIndex = 36;
-            this.label7.Text = "Output File Name";
+            this.label7.Text = "File Name";
             // 
             // fileNameBox
             // 
@@ -609,6 +610,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(618, 680);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);

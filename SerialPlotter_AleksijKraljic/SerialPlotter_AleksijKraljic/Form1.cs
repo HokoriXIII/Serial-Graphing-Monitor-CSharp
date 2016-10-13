@@ -27,6 +27,7 @@ namespace SerialPlotter_AleksijKraljic
 
         // new GraphPane for plotting
         GraphPane akMonitor = new GraphPane();
+        
         // range of X-Axis
         double t_range = 4;
         // Min and Max values for Y-Axis
