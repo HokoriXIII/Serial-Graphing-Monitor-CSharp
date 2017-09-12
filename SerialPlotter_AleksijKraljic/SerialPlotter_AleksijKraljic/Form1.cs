@@ -48,6 +48,7 @@ namespace SerialPlotter_AleksijKraljic
             btn_disconnect.Enabled = false;
             btn_start.Enabled = false;
             btn_stop.Enabled = false;
+            receivedTimeCheckBox.Enabled = false;
 
             // get and set serial ports
             getAndWritePorts();
@@ -171,7 +172,7 @@ namespace SerialPlotter_AleksijKraljic
                 }
 
                 measurement.splitReceivedString(Convert.ToChar(separatorBox.Text));
-
+                
                 channels.ForEach(c => c.timeStamp = measurement.timeStamp);
                 for (int i = 0; i < measurement.numOfDataReceived; i++)
                 {
@@ -250,6 +251,10 @@ namespace SerialPlotter_AleksijKraljic
             measurement.stop();
             channelSelectBoxes.ForEach(c => c.Enabled = false);
 
+            receivedTimeCheckBox.Enabled = false;
+            receivedTimeCheckBox.Checked = false;
+            measurement.plotReceivedTime = false;
+
             if (saveCheckBox.Checked)
             {
                 save_measurements();
@@ -303,6 +308,9 @@ namespace SerialPlotter_AleksijKraljic
             btn_refreshCOM.Enabled = true;
             numericUDbuffer.Enabled = true;
             separatorBox.Enabled = true;
+            receivedTimeCheckBox.Enabled = false;
+            receivedTimeCheckBox.Checked = false;
+            measurement.plotReceivedTime = false;
             channels.Clear();
         }
 
@@ -339,11 +347,15 @@ namespace SerialPlotter_AleksijKraljic
         private void toBuffer(object sender, EventArgs e)
         {
             measurement.setTimeStamp();
-                for (int i = 0; i < measurement.numOfDataReceived; i++)
-                {
-                    if (channelSelectBoxes[i].Checked) { channels[i].addToBuffer(); }
-                    else { channels[i].ringBuffer.Clear(); }
-                }
+            for (int i = 0; i < measurement.numOfDataReceived; i++)
+            {
+                if (channelSelectBoxes[i].Checked) { channels[i].addToBuffer(); }
+                else { channels[i].ringBuffer.Clear(); }
+            }
+            if (measurement.numOfDataReceived >= 2)
+            {
+                receivedTimeCheckBox.Enabled = true;
+            }
         }
 
         private void plot_data(object sender, EventArgs e)
@@ -430,6 +442,18 @@ namespace SerialPlotter_AleksijKraljic
         private void directoryBox_TextChanged(object sender, EventArgs e)
         {
             myDirectory = directoryBox.Text;
+        }
+
+        private void receivedTimeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (receivedTimeCheckBox.Checked)
+            {
+                measurement.plotReceivedTime = true;
+            }
+            else
+            {
+                measurement.plotReceivedTime = false;
+            }
         }
     }
 }

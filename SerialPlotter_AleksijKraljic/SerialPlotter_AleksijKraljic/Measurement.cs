@@ -18,16 +18,19 @@ namespace SerialPlotter_AleksijKraljic
         public int numOfDataReceived {get; set;}
         public double timeStamp { get; set; }
         public List<string> recordedString = new List<string>();
+        public bool plotReceivedTime { get; set; }
 
         Stopwatch s_watch = new Stopwatch();
 
         // Fields
         private string temp_rec;
+        private double lastTimeStamp = 0;
 
         // Methods
         public void start()
         {
             s_watch.Start();
+            plotReceivedTime = false;
         }
         public void stop()
         {
@@ -36,7 +39,24 @@ namespace SerialPlotter_AleksijKraljic
         }
         public void setTimeStamp()
         {
-            timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
+            //timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
+            if (plotReceivedTime)
+            {
+                try
+                {
+                    timeStamp = Convert.ToDouble(splittedData[0]);
+                    lastTimeStamp = timeStamp;
+                }
+                catch
+                {
+                    timeStamp = Convert.ToDouble(lastTimeStamp);
+                }
+            }
+            else
+            {
+                timeStamp = Convert.ToDouble(s_watch.ElapsedMilliseconds);
+            }
+            //Console.WriteLine(splittedData[0]);
         }
         public void splitReceivedString(char Separator)
         {

@@ -73,6 +73,8 @@
             this.directoryBox = new System.Windows.Forms.TextBox();
             this.btn_browse = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.receivedTimeCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUDbuffer)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -83,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUDlineWidth)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_refreshCOM
@@ -181,10 +184,13 @@
             // 
             // zedGraphControl1
             // 
+            this.zedGraphControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.zedGraphControl1.AutoSize = true;
-            this.zedGraphControl1.BackColor = System.Drawing.SystemColors.Control;
+            this.zedGraphControl1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.zedGraphControl1.Location = new System.Drawing.Point(11, 254);
-            this.zedGraphControl1.MaximumSize = new System.Drawing.Size(595, 408);
+            this.zedGraphControl1.MaximumSize = new System.Drawing.Size(1000, 1000);
             this.zedGraphControl1.MinimumSize = new System.Drawing.Size(300, 300);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
@@ -522,6 +528,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.AllowMerge = false;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configDirectionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -606,12 +613,35 @@
             this.btn_browse.UseVisualStyleBackColor = true;
             this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.receivedTimeCheckBox);
+            this.groupBox5.Location = new System.Drawing.Point(398, 183);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(137, 41);
+            this.groupBox5.TabIndex = 42;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Time Axis";
+            // 
+            // receivedTimeCheckBox
+            // 
+            this.receivedTimeCheckBox.AutoSize = true;
+            this.receivedTimeCheckBox.Enabled = false;
+            this.receivedTimeCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.receivedTimeCheckBox.Name = "receivedTimeCheckBox";
+            this.receivedTimeCheckBox.Size = new System.Drawing.Size(126, 17);
+            this.receivedTimeCheckBox.TabIndex = 40;
+            this.receivedTimeCheckBox.Text = "Received Timestamp";
+            this.receivedTimeCheckBox.UseVisualStyleBackColor = true;
+            this.receivedTimeCheckBox.CheckedChanged += new System.EventHandler(this.receivedTimeCheckBox_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(618, 680);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -625,7 +655,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(634, 719);
+            this.MaximumSize = new System.Drawing.Size(1920, 1080);
             this.MinimumSize = new System.Drawing.Size(634, 719);
             this.Name = "Form1";
             this.Text = "Serial Graphing Monitor";
@@ -645,6 +675,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -695,6 +727,8 @@
         private System.Windows.Forms.TextBox directoryBox;
         private System.Windows.Forms.Button btn_browse;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox receivedTimeCheckBox;
     }
 }
 
